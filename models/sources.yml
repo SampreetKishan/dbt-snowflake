@@ -1,0 +1,10 @@
+sources:
+    - name: 'jaffle_shop'
+      description: This is a replica of the Postgres database used by our app
+      database: dbt_raw
+      schema: jaffle_shop
+      tables:
+        - name: customers
+          description: 'Includes one record per customer'
+        - name: orders
+          description: 'Includes one record per orders including deleted and cancelled orders'

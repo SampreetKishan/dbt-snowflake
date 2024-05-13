@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: customers
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: first_order_date
+        description: 'The date a customer ordered for the first time'
+      - name: most_recent_order_date
+        description: 'The date a customer ordered most recently'
+  
+  - name: stg_customers
+    columns:
+      - name: customer_id 
+        tests:
+          - unique
+          - not_null  
+        description: 'Primary key with respect to connecting with stg_orders table'
+
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null 
+      - name: status  
+        tests:
+          - accepted_values:
+              values:
+                ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+      - name: customer_id 
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+        description: 'Foreign key with respect to connecting to the stg_customers table'
